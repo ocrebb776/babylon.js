@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/5.2.0/babylon.js"
+        integrity="sha512-nkh/2FPHyYy2yHhMdo2RzJPBjTZNGbJLMItz7CfjviDysWffH2RyAJQQmJeluWi+XJiAxPAjlMj+vT3vLHTgsQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Game</title>
+    <style>
+        html {
+            background-color: red;
+        }
+
+        canvas {
+            width: 100vw;
+            height: 56.25vw;
+            /* height:width ratio = 9/16 = .5625  */
+            max-height: 100vh;
+            max-width: 177.78vh;
+            /* 16/9 = 1.778 */
+            margin: auto;
+            background-color: white;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            /* vertical center */
+            left: 0;
+            right: 0;
+            /* horizontal center */
+            border: 5px solid black;
+            transform: scale(0.9);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas">
+
+    </canvas>
+    <script>      window.addEventListener('DOMContentLoaded', function () {
+
+            var canvas = document.getElementById('canvas');
+            var engine = new BABYLON.Engine(canvas, true);
+            var createScene = function () {
+                var scene = new BABYLON.Scene(engine);
+                scene.clearColor = new BABYLON.Color3.White();
+                var box = BABYLON.Mesh.CreateBox("Box", 4.0, scene);
+                var box2 = BABYLON.Mesh.CreateBox("Box", 4.0, scene);
+                box2.position = new BABYLON.Vector3(0, 0, 5);
+                var camera = new BABYLON.ArcRotateCamera("arcCam",
+                    BABYLON.Tools.ToRadians(45),
+                    BABYLON.Tools.ToRadians(45),
+                    10.0, box.position, scene);
+                camera.attachControl(canvas, true);
+                var light = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(5, 10, 10), scene);
+                light.intensity = 1
+
+                light.diffuse = new BABYLON.Color3(1, 1, 1)
+                let material2 = new BABYLON.StandardMaterial("material2", scene)
+                material2.diffuseColor = BABYLON.Color3.Red()
+                box.material = material2;
+                return scene;
+            }
+            var scene = createScene(); engine.runRenderLoop(function () {
+                scene.render()
+
+
+            });
+        });  </script>
+
+
+
+</body>
+
+</html>
